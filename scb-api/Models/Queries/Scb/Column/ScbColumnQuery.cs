@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
+using scb_api.Models.Queries.Scb.Column.Filter;
 
-namespace scb_api.Models.Queries
+namespace scb_api.Models.Queries.Scb.Column
 {
   public class ScbColumnQuery
   {

@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace scb_api.Models.Queries
+namespace scb_api.Models.Queries.Scb.Response
 {
   public enum ScbResponseFormatTypes
   {

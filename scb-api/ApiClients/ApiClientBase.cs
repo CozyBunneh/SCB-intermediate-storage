@@ -19,27 +19,22 @@ namespace scb_api.ApiClients
     private static HttpClient _client = new HttpClient();
 
     protected readonly IConfiguration configuration;
-    protected readonly ILogger<T> logger;
 
-    public ApiClientBase(IConfiguration configuration, ILogger<T> logger, Uri baseAddress)
+    public ApiClientBase(IConfiguration configuration, Uri baseAddress)
     {
       this.configuration = configuration;
-      this.logger = logger;
-      this.logger.LogInformation($"{BaseAddressSetTo}: {baseAddress}");
       _client.BaseAddress = baseAddress;
       _client.DefaultRequestHeaders.Accept.Clear();
       _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeHeaderValue));
     }
 
-    public async Task<HttpResponseMessage> GetAsync(string apiEndpoint, IDictionary<string, string> queryParams)
+    protected async Task<HttpResponseMessage> GetAsync(string apiEndpoint, IDictionary<string, string> queryParams)
     {
-      this.logger.LogInformation($"Get call {_client.BaseAddress}/{apiEndpoint}?{queryParams.ToString()}");
       return await _client.GetAsync(GetRequestQueryString(apiEndpoint, queryParams));
     }
 
-    public async Task<HttpResponseMessage> PostAsync<O>(string apiEndpoint, O content)
+    protected async Task<HttpResponseMessage> PostAsync<T1>(string apiEndpoint, T1 content)
     {
-      this.logger.LogInformation($"Post call {_client.BaseAddress}/{apiEndpoint}\n\nContent:\n{JsonConvert.SerializeObject(content)}");
       return await _client.PostAsync(apiEndpoint, content, new JsonMediaTypeFormatter());
     }
 

@@ -8,6 +8,7 @@ namespace scb_api.Helpers
     private const string ScbConfig = "ScbConfig";
     private const string Protocol = "Protocol";
     private const string Address = "Address";
+    private const string ApiName = "ApiName";
     private const string ApiVersion = "ApiVersion";
     private const string ApiType = "ApiType";
     private const string Language = "Language";
@@ -25,12 +26,13 @@ namespace scb_api.Helpers
 
       var protocol = scbConfig.GetValue<string>(ScbHelper.Protocol);
       var address = scbConfig.GetValue<string>(ScbHelper.Address);
+      var apiName = scbConfig.GetValue<string>(ScbHelper.ApiName);
       var apiVersion = scbConfig.GetValue<string>(ScbHelper.ApiVersion);
       var apiType = scbConfig.GetValue<string>(ScbHelper.ApiType);
       var language = scbConfig.GetValue<string>(ScbHelper.Language);
       var databaseId = scbConfig.GetValue<string>(ScbHelper.DatabaseId);
 
-      return new Uri($"{protocol}://{address}/{apiVersion}/{apiType}/{language}/{databaseId}");
+      return new Uri($"{protocol}://{address}/{apiName}/{apiVersion}/{apiType}/{language}/{databaseId}/");
     }
 
     public static string GetScbDatabasePath(IConfiguration configuration)
