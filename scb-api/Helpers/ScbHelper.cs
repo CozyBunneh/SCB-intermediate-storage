@@ -13,7 +13,8 @@ namespace scb_api.Helpers
     private const string ApiType = "ApiType";
     private const string Language = "Language";
     private const string DatabaseId = "DatabaseId";
-    private const string LocalSqLitePath = "LocalSqLitePath";
+    private const string LocalSqlLiteDirectory = "LocalSqlLiteDirectory";
+    private const string LocalSqLiteDbName = "LocalSqLiteDbName";
 
     public const string Population = "BE";
     public const string PopulationStatistics = "BE0101";
@@ -38,7 +39,13 @@ namespace scb_api.Helpers
     public static string GetScbDatabasePath(IConfiguration configuration)
     {
       var scbConfig = configuration.GetSection(ScbConfig);
-      return scbConfig.GetValue<string>(LocalSqLitePath);
+      return $"{GetScbDatabaseDirectory(configuration)}/{scbConfig.GetValue<string>(LocalSqLiteDbName)}";
+    }
+
+    public static string GetScbDatabaseDirectory(IConfiguration configuration)
+    {
+      var scbConfig = configuration.GetSection(ScbConfig);
+      return scbConfig.GetValue<string>(LocalSqlLiteDirectory);
     }
   }
 }

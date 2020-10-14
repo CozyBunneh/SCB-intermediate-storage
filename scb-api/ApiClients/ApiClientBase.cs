@@ -28,9 +28,14 @@ namespace scb_api.ApiClients
       _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeHeaderValue));
     }
 
-    protected async Task<HttpResponseMessage> GetAsync(string apiEndpoint, IDictionary<string, string> queryParams)
+    protected async Task<HttpResponseMessage> GetAsync(string apiEndpoint, IDictionary<string, string> queryParams = null)
     {
-      return await _client.GetAsync(GetRequestQueryString(apiEndpoint, queryParams));
+      if (queryParams != null)
+      {
+        return await _client.GetAsync(GetRequestQueryString(apiEndpoint, queryParams));
+      }
+
+      return await _client.GetAsync(apiEndpoint);
     }
 
     protected async Task<HttpResponseMessage> PostAsync<T1>(string apiEndpoint, T1 content)

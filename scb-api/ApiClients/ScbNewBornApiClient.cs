@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using scb_api.Helpers;
+using scb_api.Models.DTOs.Scb;
 using scb_api.Models.Queries;
 using scb_api.Models.Queries.Scb;
 using scb_api.Models.Queries.Scb.Column;
@@ -24,12 +25,20 @@ namespace scb_api.ApiClients
     private static string S2013 = "2013";
     private static string S2014 = "2014";
 
+    private string _apiEndpoint = $"{ScbHelper.Population}/{ScbHelper.PopulationStatistics}/{ScbHelper.LiveBirths}/{ScbHelper.LiveBirthsByRegionMothersAgeChildSexAndYear}";
+
     public ScbNewBornApiClient(IConfiguration configuration) : base(configuration, ScbHelper.GetScbUri(configuration)) { }
 
-    public void PostNewBornPopulationQuery()
+    public ScbTableResponse GetNewBornPopulationTableInfo()
     {
-      var apiEndpoint = $"{ScbHelper.Population}/{ScbHelper.PopulationStatistics}/{ScbHelper.LiveBirths}/{ScbHelper.LiveBirthsByRegionMothersAgeChildSexAndYear}";
+      var response = GetAsync(_apiEndpoint).Result;
+      var json = response.Content.ReadAsStringAsync().Result;
+      return JsonConvert.DeserializeObject<ScbTableResponse>(json);
+      // Console.WriteLine(JsonConvert.SerializeObject(obj, Formatting.Indented));
+    }
 
+    public ScbTableQueryResponse PostNewBornPopulationQuery()
+    {
       var query = new ScbQuery()
       {
         Query = new List<ScbColumnQuery>() {
@@ -61,8 +70,11 @@ namespace scb_api.ApiClients
         }
       };
 
-      var response = PostAsync(apiEndpoint, query).Result;
+      var response = PostAsync(_apiEndpoint, query).Result;
       var json = response.Content.ReadAsStringAsync().Result;
+      return JsonConvert.DeserializeObject<ScbTableQueryResponse>(json);
+      // Console.WriteLine(JsonConvert.SerializeObject(obj, Formatting.Indented));
+      // Console.WriteLine(json);
     }
   }
 }

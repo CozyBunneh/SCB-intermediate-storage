@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using scb_api.Helpers;
+using scb_api.Models.Entities;
 
 namespace scb_api.Models
 {
@@ -24,11 +25,12 @@ namespace scb_api.Models
     {
       base.OnModelCreating(builder);
 
-      // Crete composite keys (many-to-many)
-
       // Create composite keys (one-to-many)
+      builder.Entity<Born>().HasOne(b => b.Region).WithMany(r => r.Born);
 
       // Create unique indexes
+      builder.Entity<Region>().HasIndex(r => r.Id).IsUnique();
+      builder.Entity<Born>().HasIndex(b => b.Id).IsUnique();
     }
   }
 }
