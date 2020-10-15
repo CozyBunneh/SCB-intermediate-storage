@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using scb_api.ApiClients;
 using scb_api.Helpers;
 using scb_api.Models;
+using scb_api.Models.Entities;
 
 namespace scb_api
 {
@@ -51,6 +52,8 @@ namespace scb_api
         });
       });
 
+      services.AddDbContext<ScbDbContext>();
+
       services.AddControllers();
 
       services.AddSingleton<IConfiguration>(Configuration);
@@ -65,16 +68,18 @@ namespace scb_api
         app.UseDeveloperExceptionPage();
       }
 
+      app.UseCors(AllowSpecificOrigins);
+
       app.UseHttpsRedirection();
 
       app.UseRouting();
 
       app.UseAuthorization();
 
-      UpdateDatabase(false, app.ApplicationServices);
+      UpdateDatabase(true, app.ApplicationServices);
 
       // Get data from SCB and populate the database with it
-      PopulateDatabase(app.ApplicationServices);
+      PopulateDatabase(app.ApplicationServices).Wait();
 
       app.UseEndpoints(endpoints =>
       {
@@ -110,14 +115,22 @@ namespace scb_api
       }
     }
 
-    private void PopulateDatabase(IServiceProvider serviceProvider)
+    private async Task PopulateDatabase(IServiceProvider serviceProvider)
     {
       var scbTableResponse = ScbNewBornApiClient.GetNewBornPopulationTableInfo();
       var scbTableQueryResponse = ScbNewBornApiClient.PostNewBornPopulationQuery();
+      var regions = scbTableQueryResponse.ToEntities(scbTableResponse);
 
       using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
         var dbContext = serviceScope.ServiceProvider.GetService<ScbDbContext>();
+        var regionDbSet = dbContext.Set<Region>();
+
+        foreach (var region in regions)
+        {
+          await regionDbSet.AddAsync(region);
+        }
+        await dbContext.SaveChangesAsync();
       }
     }
   }

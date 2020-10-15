@@ -8,6 +8,6 @@ namespace scb_api.Models.Entities
     [Key]
     public string Id { get; set; }
     public string Name { get; set; }
-    public virtual List<Born> Born { get; } = new List<Born>();
+    public virtual IEnumerable<Born> Born { get; set; }
   }
 }

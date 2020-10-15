@@ -7,11 +7,15 @@ namespace scb_api.Models
 {
   public class ScbDbContext : DbContext
   {
+    public DbSet<Region> Regions { get; set; }
+    public DbSet<Born> Borns { get; set; }
+    public DbSet<Gender> Genders { get; set; }
+
     private const string DataSource = "Data Source";
 
     private IConfiguration configuration;
 
-    protected ScbDbContext(IConfiguration configuration)
+    public ScbDbContext(IConfiguration configuration)
     {
       this.configuration = configuration;
     }
@@ -26,11 +30,13 @@ namespace scb_api.Models
       base.OnModelCreating(builder);
 
       // Create composite keys (one-to-many)
-      builder.Entity<Born>().HasOne(b => b.Region).WithMany(r => r.Born);
+      // builder.Entity<Born>().HasOne(b => b.Region).WithMany(r => r.Born);
+      // builder.Entity<Born>().HasOne(b => b.Gender).WithMany(g => g.Born);
 
       // Create unique indexes
-      builder.Entity<Region>().HasIndex(r => r.Id).IsUnique();
-      builder.Entity<Born>().HasIndex(b => b.Id).IsUnique();
+      // builder.Entity<Region>().HasIndex(r => r.Id).IsUnique();
+      // builder.Entity<Born>().HasIndex(b => b.Id).IsUnique();
+      // builder.Entity<Gender>().HasIndex(g => g.Id).IsUnique();
     }
   }
 }
