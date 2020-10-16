@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using scb_api.Helpers;
 using scb_api.Models.DTOs.Scb;
-using scb_api.Models.Queries;
 using scb_api.Models.Queries.Scb;
 using scb_api.Models.Queries.Scb.Column;
 using scb_api.Models.Queries.Scb.Column.Filter;
@@ -34,7 +31,6 @@ namespace scb_api.ApiClients
       var response = GetAsync(_apiEndpoint).Result;
       var json = response.Content.ReadAsStringAsync().Result;
       return JsonConvert.DeserializeObject<ScbTableResponse>(json);
-      // Console.WriteLine(JsonConvert.SerializeObject(obj, Formatting.Indented));
     }
 
     public ScbTableQueryResponse PostNewBornPopulationQuery()
@@ -73,8 +69,6 @@ namespace scb_api.ApiClients
       var response = PostAsync(_apiEndpoint, query).Result;
       var json = response.Content.ReadAsStringAsync().Result;
       return JsonConvert.DeserializeObject<ScbTableQueryResponse>(json);
-      // Console.WriteLine(JsonConvert.SerializeObject(obj, Formatting.Indented));
-      // Console.WriteLine(json);
     }
   }
 }

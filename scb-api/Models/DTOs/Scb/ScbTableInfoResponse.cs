@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using scb_api.Models.Entities;
 
 namespace scb_api.Models.DTOs.Scb
 {

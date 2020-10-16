@@ -8,7 +8,7 @@ namespace scb_api.Models
   public class ScbDbContext : DbContext
   {
     public DbSet<Region> Regions { get; set; }
-    public DbSet<NewBorn> Borns { get; set; }
+    public DbSet<NewBorn> NewBorns { get; set; }
     public DbSet<Gender> Genders { get; set; }
 
     private const string DataSource = "Data Source";

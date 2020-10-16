@@ -22,7 +22,6 @@ namespace scb_api.Models.DTOs.Scb
       var regions = scbTableResponse.ToRegionEntities();
       var genders = scbTableResponse.ToGenderEntities();
 
-      // var regionsPopulated = new List<Region>();
       foreach (var region in regions)
       {
         var regionData = Data.Where(d => d[KeyKey][RegionIdIndex] == region.Id).ToList();
@@ -33,7 +32,6 @@ namespace scb_api.Models.DTOs.Scb
 
           var born = new NewBorn()
           {
-            // Gender = gender.Id,
             Year = int.Parse(data[KeyKey][YearIndex]),
             Count = int.Parse(data[KeyValues][NewBornCountIndex]),
             Region = region,

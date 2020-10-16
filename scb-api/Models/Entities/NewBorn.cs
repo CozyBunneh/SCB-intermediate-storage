@@ -8,7 +8,6 @@ namespace scb_api.Models.Entities
     public int Id { get; set; }
     public int Year { get; set; }
     public int Count { get; set; }
-    // public int Gender { get; set; }
 
     public Region Region { get; set; }
     public Gender Gender { get; set; }
