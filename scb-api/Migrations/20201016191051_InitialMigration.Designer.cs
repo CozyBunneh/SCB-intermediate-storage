@@ -9,7 +9,7 @@ using scb_api.Models;
 namespace scb_api.Migrations
 {
     [DbContext(typeof(ScbDbContext))]
-    [Migration("20201015225614_InitialMigration")]
+    [Migration("20201016191051_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,21 @@ namespace scb_api.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
 
-            modelBuilder.Entity("scb_api.Models.Entities.Born", b =>
+            modelBuilder.Entity("scb_api.Models.Entities.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genders");
+                });
+
+            modelBuilder.Entity("scb_api.Models.Entities.NewBorn", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,20 +59,6 @@ namespace scb_api.Migrations
                     b.ToTable("Borns");
                 });
 
-            modelBuilder.Entity("scb_api.Models.Entities.Gender", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genders");
-                });
-
             modelBuilder.Entity("scb_api.Models.Entities.Region", b =>
                 {
                     b.Property<string>("Id")
@@ -72,14 +72,14 @@ namespace scb_api.Migrations
                     b.ToTable("Regions");
                 });
 
-            modelBuilder.Entity("scb_api.Models.Entities.Born", b =>
+            modelBuilder.Entity("scb_api.Models.Entities.NewBorn", b =>
                 {
                     b.HasOne("scb_api.Models.Entities.Gender", "Gender")
-                        .WithMany("Born")
+                        .WithMany("Borns")
                         .HasForeignKey("GenderId");
 
                     b.HasOne("scb_api.Models.Entities.Region", "Region")
-                        .WithMany("Born")
+                        .WithMany("Borns")
                         .HasForeignKey("RegionId");
                 });
 #pragma warning restore 612, 618

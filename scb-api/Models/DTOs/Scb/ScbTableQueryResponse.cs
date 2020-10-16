@@ -20,22 +20,29 @@ namespace scb_api.Models.DTOs.Scb
     public IEnumerable<Region> ToEntities(ScbTableResponse scbTableResponse)
     {
       var regions = scbTableResponse.ToRegionEntities();
-      var gender = scbTableResponse.ToGenderEntities();
+      var genders = scbTableResponse.ToGenderEntities();
 
+      // var regionsPopulated = new List<Region>();
       foreach (var region in regions)
       {
         var regionData = Data.Where(d => d[KeyKey][RegionIdIndex] == region.Id).ToList();
-        var newBorn = new List<Born>();
+        var newBorns = new List<NewBorn>();
         foreach (var data in regionData)
         {
-          newBorn.Add(new Born()
+          var gender = genders.FirstOrDefault(g => g.Id == int.Parse(data[KeyKey][GenderIdIndex]));
+
+          var born = new NewBorn()
           {
-            Gender = gender.FirstOrDefault(g => g.Id == int.Parse(data[KeyKey][GenderIdIndex])),
+            // Gender = gender.Id,
             Year = int.Parse(data[KeyKey][YearIndex]),
-            Count = int.Parse(data[KeyValues][NewBornCountIndex])
-          });
+            Count = int.Parse(data[KeyValues][NewBornCountIndex]),
+            Region = region,
+            Gender = genders.FirstOrDefault(g => g.Id == int.Parse(data[KeyKey][GenderIdIndex])),
+          };
+
+          newBorns.Add(born);
         }
-        region.Born = newBorn;
+        region.Borns = newBorns;
       }
 
       return regions;

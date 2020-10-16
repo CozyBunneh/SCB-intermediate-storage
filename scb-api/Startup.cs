@@ -101,7 +101,6 @@ namespace scb_api
         try
         {
           Directory.CreateDirectory(ScbHelper.GetScbDatabaseDirectory(Configuration));
-          dbContext.Database.EnsureCreated();
 
           if (dbContext.Database.GetPendingMigrations().Any())
           {

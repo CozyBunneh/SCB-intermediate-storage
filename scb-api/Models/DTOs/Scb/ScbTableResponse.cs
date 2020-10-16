@@ -16,13 +16,13 @@ namespace scb_api.Models.DTOs.Scb
     public IEnumerable<Region> ToRegionEntities()
     {
       var regionInfo = Variables.FirstOrDefault(v => v.Code == Region);
-      return regionInfo.Values.Zip(regionInfo.ValueTexts, (n, w) => new Region { Id = n.ToString(), Name = w });
+      return regionInfo.Values.Zip(regionInfo.ValueTexts, (n, w) => new Region { Id = n.ToString(), Name = w }).ToList();
     }
 
     public IEnumerable<Gender> ToGenderEntities()
     {
       var genderInfo = Variables.FirstOrDefault(v => v.Code == Kon);
-      return genderInfo.Values.Zip(genderInfo.ValueTexts, (n, w) => new Gender { Id = int.Parse(n.ToString()), Name = w });
+      return genderInfo.Values.Zip(genderInfo.ValueTexts, (n, w) => new Gender { Id = int.Parse(n.ToString()), Name = w }).ToList();
     }
   }
 }
