@@ -32,7 +32,7 @@ namespace scb_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Borns",
+                name: "NewBorns",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -44,15 +44,15 @@ namespace scb_api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Borns", x => x.Id);
+                    table.PrimaryKey("PK_NewBorns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Borns_Genders_GenderId",
+                        name: "FK_NewBorns_Genders_GenderId",
                         column: x => x.GenderId,
                         principalTable: "Genders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Borns_Regions_RegionId",
+                        name: "FK_NewBorns_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
@@ -60,20 +60,20 @@ namespace scb_api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Borns_GenderId",
-                table: "Borns",
+                name: "IX_NewBorns_GenderId",
+                table: "NewBorns",
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Borns_RegionId",
-                table: "Borns",
+                name: "IX_NewBorns_RegionId",
+                table: "NewBorns",
                 column: "RegionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Borns");
+                name: "NewBorns");
 
             migrationBuilder.DropTable(
                 name: "Genders");

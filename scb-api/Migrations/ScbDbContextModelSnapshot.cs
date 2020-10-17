@@ -54,7 +54,7 @@ namespace scb_api.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Borns");
+                    b.ToTable("NewBorns");
                 });
 
             modelBuilder.Entity("scb_api.Models.Entities.Region", b =>

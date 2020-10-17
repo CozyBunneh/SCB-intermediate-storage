@@ -9,7 +9,7 @@ using scb_api.Models;
 namespace scb_api.Migrations
 {
     [DbContext(typeof(ScbDbContext))]
-    [Migration("20201016191051_InitialMigration")]
+    [Migration("20201017132442_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,7 +56,7 @@ namespace scb_api.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Borns");
+                    b.ToTable("NewBorns");
                 });
 
             modelBuilder.Entity("scb_api.Models.Entities.Region", b =>

@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using scb_api.ApiClients;
 using scb_api.Helpers;
 using scb_api.Models;
@@ -52,6 +55,22 @@ namespace scb_api
 
       services.AddControllers();
 
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo
+        {
+          Title = "SCB intermediate storage API",
+          Version = "v1",
+          Description = "Intermediate storage API for Statistics Sweden",
+        });
+
+        // XML Documentation
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
+      });
+      services.AddSwaggerGenNewtonsoftSupport();
+
       services.AddSingleton<IConfiguration>(Configuration);
       services.AddSingleton<ScbNewBornApiClient>(ScbNewBornApiClient);
     }
@@ -67,6 +86,13 @@ namespace scb_api
       app.UseCors(AllowSpecificOrigins);
 
       app.UseHttpsRedirection();
+
+      app.UseSwagger();
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SCB intermediate storage API v1");
+        c.RoutePrefix = string.Empty;
+      });
 
       app.UseRouting();
 
