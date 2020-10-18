@@ -53,7 +53,16 @@ namespace scb_api
 
       services.AddDbContext<ScbDbContext>();
 
-      services.AddControllers();
+      services.AddControllers((options) =>
+      {
+        options.CacheProfiles.Add("Default", new CacheProfile()
+        {
+          Duration = 60,
+          Location = ResponseCacheLocation.Any,
+          NoStore = false
+        });
+      });
+      services.AddResponseCaching();
 
       services.AddSwaggerGen(c =>
       {
@@ -86,6 +95,8 @@ namespace scb_api
       app.UseCors(AllowSpecificOrigins);
 
       app.UseHttpsRedirection();
+
+      app.UseResponseCaching();
 
       app.UseSwagger();
       app.UseSwaggerUI(c =>

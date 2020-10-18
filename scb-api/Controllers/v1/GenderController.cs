@@ -46,6 +46,7 @@ namespace scb_api.Controllers.v1
     [HttpGet]
     [ProducesResponseType(typeof(GenderV1[]), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ResponseCache(CacheProfileName = "Default")]
     public async Task<IActionResult> GetAll([FromRoute] string regionId)
     {
       if (string.IsNullOrWhiteSpace(regionId))
@@ -75,6 +76,7 @@ namespace scb_api.Controllers.v1
     [ProducesResponseType(typeof(GenderV1), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ResponseCache(CacheProfileName = "Default")]
     public async Task<IActionResult> Get([FromRoute] string regionId, int id)
     {
       if (id == 0)

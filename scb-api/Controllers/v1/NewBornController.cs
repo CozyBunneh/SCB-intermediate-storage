@@ -47,6 +47,7 @@ namespace scb_api.Controllers.v1
     [ProducesResponseType(typeof(NewBornV1[]), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ResponseCache(CacheProfileName = "Default")]
     public async Task<IActionResult> GetAll([FromRoute] string regionId, [FromRoute] int genderId)
     {
       if (string.IsNullOrWhiteSpace(regionId) || genderId == 0)
@@ -77,6 +78,7 @@ namespace scb_api.Controllers.v1
     [ProducesResponseType(typeof(NewBornV1), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ResponseCache(CacheProfileName = "Default")]
     public async Task<IActionResult> Get([FromRoute] string regionId, [FromRoute] int genderId, int year)
     {
       if (string.IsNullOrWhiteSpace(regionId) || genderId == 0 || year == 0)
