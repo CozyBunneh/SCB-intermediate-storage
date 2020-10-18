@@ -30,7 +30,7 @@ community/aspnet-runtime 3.1.8.sdk108-1 (6.1 MiB 17.2 MiB)
 
 ###### Install this for dotnet entity framework
 $ dotnet tool install --global dotnet-ef
-Add to path: PATH="/usr/local/bin:/usr/local/sbin/:/home/bunneh/.dotnet:/home/bunneh/.dotnet/tools:$PATH"
+Add to path: PATH="/usr/local/bin:/usr/local/sbin/:/home/<user>/.dotnet:/home/<user>/.dotnet/tools:$PATH"
 
 ##### In the scb-api folder
 $ dotnet restore
