@@ -8,7 +8,7 @@ As long as dotnet and such are installed.
 
 $ `dotnet restore`
 
-$ `dotnet run` F5 in VS Code
+$ `dotnet run` or F5 in VS Code
 
 Open: https://localhost:5001/
 
