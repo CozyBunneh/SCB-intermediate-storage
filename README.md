@@ -1,6 +1,18 @@
 # SCB-intermediate-storage
 Dotnet Core intermediate storage api against the Swedish statistics database
 
+## To simply run the application
+As long as dotnet and such are installed.
+
+### In the scb-api folder
+
+$ dotnet restore
+
+$ dotnet run
+or F5 in VS Code
+
+Open: https://localhost:5001/
+
 ## Installation
 ### DotNet Core
 ##### Install these packages:
@@ -21,7 +33,7 @@ community/aspnet-runtime 3.1.8.sdk108-1 (6.1 MiB 17.2 MiB)
 $ dotnet tool install --global dotnet-ef
 Add to path: PATH="/usr/local/bin:/usr/local/sbin/:/home/bunneh/.dotnet:/home/bunneh/.dotnet/tools:$PATH"
 
-##### In the api folder
+##### In the scb-api folder
 $ dotnet restore
 
 $ dotnet run
