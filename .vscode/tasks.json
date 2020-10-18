@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "migrationName",
+      "type": "promptString",
+      "description": "Name of new DB migration",
+      "default": "NewMigration"
+    }
+  ],
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/scb-api/scb-api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/scb-api/scb-api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/scb-api/scb-api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Add migration",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["ef", "migrations", "add", "${input:migrationName}"],
+      "options": {
+        "cwd": "${workspaceRoot}/scb-api"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Remove previous migration",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["ef", "migrations", "remove"],
+      "options": {
+        "cwd": "${workspaceRoot}/scb-api"
+      },
+      "problemMatcher": "$msCompile"
+    }q
+  ]
+}
