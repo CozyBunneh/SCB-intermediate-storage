@@ -6,10 +6,9 @@ As long as dotnet and such are installed.
 
 ### In the scb-api folder
 
-$ dotnet restore
+$ `dotnet restore`
 
-$ dotnet run
-or F5 in VS Code
+$ `dotnet run` F5 in VS Code
 
 Open: https://localhost:5001/
 
