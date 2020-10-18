@@ -12,7 +12,7 @@ $ `dotnet run` or F5 in VS Code
 
 Open: https://localhost:5001/
 
-## Arch Linux Installation
+## Arch Linux Development Instructions
 ### DotNet Core
 ##### Install these packages:
 ```
@@ -29,13 +29,13 @@ community/aspnet-runtime 3.1.8.sdk108-1 (6.1 MiB 17.2 MiB)
 ```
 
 ###### Install this for dotnet entity framework
-$ dotnet tool install --global dotnet-ef
-Add to path: PATH="/usr/local/bin:/usr/local/sbin/:/home/user-name/.dotnet:/home/user-name/.dotnet/tools:$PATH"
+$ `dotnet tool install --global dotnet-ef
+Add to path: PATH="/usr/local/bin:/usr/local/sbin/:/home/user-name/.dotnet:/home/user-name/.dotnet/tools:$PATH"`
 
 ##### In the scb-api folder
-$ dotnet restore
+$ `dotnet restore`
 
-$ dotnet run
+$ `dotnet run`
 or F5 in VS Code
 
 ## Editor
