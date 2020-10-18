@@ -16,13 +16,13 @@ Open: https://localhost:5001/
 ### DotNet Core
 ##### Install these packages:
 ```
-community/dotnet-targeting-pack 3.1.8.sdk108-1 (2.0 MiB 24.2 MiB) (Installed)
+community/dotnet-targeting-pack 3.1.8.sdk108-1 (2.0 MiB 24.2 MiB)
     The .NET Core targeting pack
-community/dotnet-sdk 3.1.8.sdk108-1 (40.2 MiB 142.9 MiB) (Installed)
+community/dotnet-sdk 3.1.8.sdk108-1 (40.2 MiB 142.9 MiB)
     The .NET Core SDK
-community/dotnet-runtime 3.1.8.sdk108-1 (22.0 MiB 68.7 MiB) (Installed)
+community/dotnet-runtime 3.1.8.sdk108-1 (22.0 MiB 68.7 MiB)
     The .NET Core runtime
-community/dotnet-host 3.1.8.sdk108-1 (159.3 KiB 492.2 KiB) (Installed)
+community/dotnet-host 3.1.8.sdk108-1 (159.3 KiB 492.2 KiB)
     A generic driver for the .NET Core Command Line Interface
 community/aspnet-runtime 3.1.8.sdk108-1 (6.1 MiB 17.2 MiB)
     The ASP.NET Core runtime
