@@ -12,7 +12,7 @@ $ `dotnet run` or F5 in VS Code
 
 Open: https://localhost:5001/
 
-## Installation
+## Arch Linux Installation
 ### DotNet Core
 ##### Install these packages:
 ```
