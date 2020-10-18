@@ -36,7 +36,7 @@ The backend project, written in dotnet core 3.1
 ### How to start
 Simply press F5 in VS Code and the project will start in debug mode (as long as the necessary plugins are installed).
 
-## Run application
+## Navigate API
 
 ### Swagger Docs for the API
 Open: https://localhost:5001/
