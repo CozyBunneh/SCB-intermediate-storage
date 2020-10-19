@@ -1,21 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using scb_api.ApiClients;
-using scb_api.Helpers;
 using scb_api.Models;
-using scb_api.Models.Entities;
+using scb_api.Services;
 
 namespace scb_api
 {
@@ -24,7 +19,6 @@ namespace scb_api
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
-      ScbNewBornApiClient = new ScbNewBornApiClient(Configuration);
     }
 
     private const string AllowSpecificOrigins = "_AllowSpecificOrigins";
@@ -35,7 +29,6 @@ namespace scb_api
     };
 
     public IConfiguration Configuration { get; }
-    public ScbNewBornApiClient ScbNewBornApiClient { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -81,7 +74,7 @@ namespace scb_api
       services.AddSwaggerGenNewtonsoftSupport();
 
       services.AddSingleton<IConfiguration>(Configuration);
-      services.AddSingleton<ScbNewBornApiClient>(ScbNewBornApiClient);
+      services.AddHostedService<UpdateDatabaseHostedService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,61 +102,10 @@ namespace scb_api
 
       app.UseAuthorization();
 
-      UpdateDatabase(true, app.ApplicationServices);
-
-      // Get data from SCB and populate the database with it
-      PopulateDatabase(app.ApplicationServices).Wait();
-
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
-    }
-
-    private void UpdateDatabase(bool delete, IServiceProvider serviceProvider)
-    {
-      using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-      {
-        var dbContext = serviceScope.ServiceProvider.GetService<ScbDbContext>();
-
-        if (delete)
-        {
-          dbContext.Database.EnsureDeleted();
-        }
-
-        try
-        {
-          Directory.CreateDirectory(ScbHelper.GetScbDatabaseDirectory(Configuration));
-
-          if (dbContext.Database.GetPendingMigrations().Any())
-          {
-            dbContext.Database.Migrate();
-          }
-        }
-        catch (Exception)
-        {
-          throw;
-        }
-      }
-    }
-
-    private async Task PopulateDatabase(IServiceProvider serviceProvider)
-    {
-      var scbTableResponse = await ScbNewBornApiClient.GetNewBornPopulationTableInfo();
-      var scbTableQueryResponse = await ScbNewBornApiClient.PostNewBornPopulationQuery();
-      var regions = scbTableQueryResponse.ToEntities(scbTableResponse);
-
-      using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-      {
-        var dbContext = serviceScope.ServiceProvider.GetService<ScbDbContext>();
-        var regionDbSet = dbContext.Set<Region>();
-
-        foreach (var region in regions)
-        {
-          await regionDbSet.AddAsync(region);
-        }
-        await dbContext.SaveChangesAsync();
-      }
     }
   }
 }
