@@ -112,18 +112,19 @@ namespace scb_api.Controllers.v1
       }
 
       var region = await _regionDbSet.FindAsync(id);
+      var genders = await _genderDbSet.ToListAsync();
+      var newBorns = await _newBornDbSet.Where(n => n.Region.Id == region.Id).ToListAsync();
+
       if (region == null)
       {
         return NotFound(region);
       }
 
-      var genders = await _genderDbSet.ToListAsync();
       if (genders == null || genders.Count == 0)
       {
         return NotFound(genders);
       }
 
-      var newBorns = await _newBornDbSet.Where(n => n.Region.Id == region.Id).ToListAsync();
       if (newBorns == null || newBorns.Count == 0)
       {
         return NotFound(newBorns);

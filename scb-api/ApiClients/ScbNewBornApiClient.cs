@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using scb_api.Helpers;
@@ -26,14 +27,14 @@ namespace scb_api.ApiClients
 
     public ScbNewBornApiClient(IConfiguration configuration) : base(configuration, ScbHelper.GetScbUri(configuration)) { }
 
-    public ScbTableResponse GetNewBornPopulationTableInfo()
+    public async Task<ScbTableResponse> GetNewBornPopulationTableInfo()
     {
-      var response = GetAsync(_apiEndpoint).Result;
-      var json = response.Content.ReadAsStringAsync().Result;
+      var response = await GetAsync(_apiEndpoint);
+      var json = await response.Content.ReadAsStringAsync();
       return JsonConvert.DeserializeObject<ScbTableResponse>(json);
     }
 
-    public ScbTableQueryResponse PostNewBornPopulationQuery()
+    public async Task<ScbTableQueryResponse> PostNewBornPopulationQuery()
     {
       var query = new ScbQuery()
       {
@@ -66,8 +67,8 @@ namespace scb_api.ApiClients
         }
       };
 
-      var response = PostAsync(_apiEndpoint, query).Result;
-      var json = response.Content.ReadAsStringAsync().Result;
+      var response = await PostAsync(_apiEndpoint, query);
+      var json = await response.Content.ReadAsStringAsync();
       return JsonConvert.DeserializeObject<ScbTableQueryResponse>(json);
     }
   }

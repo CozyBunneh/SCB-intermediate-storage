@@ -149,8 +149,8 @@ namespace scb_api
 
     private async Task PopulateDatabase(IServiceProvider serviceProvider)
     {
-      var scbTableResponse = ScbNewBornApiClient.GetNewBornPopulationTableInfo();
-      var scbTableQueryResponse = ScbNewBornApiClient.PostNewBornPopulationQuery();
+      var scbTableResponse = await ScbNewBornApiClient.GetNewBornPopulationTableInfo();
+      var scbTableQueryResponse = await ScbNewBornApiClient.PostNewBornPopulationQuery();
       var regions = scbTableQueryResponse.ToEntities(scbTableResponse);
 
       using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())

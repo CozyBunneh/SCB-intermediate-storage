@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace scb_api.ApiClients
 {
-  public class ApiClientBase<T> where T : class
+  public abstract class ApiClientBase<T> where T : class
   {
     private const string MediaTypeHeaderValue = "application/json";
     private const string BaseAddressSetTo = "Base address set to";
@@ -26,7 +26,7 @@ namespace scb_api.ApiClients
       _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeHeaderValue));
     }
 
-    protected async Task<HttpResponseMessage> GetAsync(string apiEndpoint, IDictionary<string, string> queryParams = null)
+    protected virtual async Task<HttpResponseMessage> GetAsync(string apiEndpoint, IDictionary<string, string> queryParams = null)
     {
       if (queryParams != null)
       {
@@ -36,7 +36,7 @@ namespace scb_api.ApiClients
       return await _client.GetAsync(apiEndpoint);
     }
 
-    protected async Task<HttpResponseMessage> PostAsync<T1>(string apiEndpoint, T1 content)
+    protected virtual async Task<HttpResponseMessage> PostAsync<T1>(string apiEndpoint, T1 content)
     {
       return await _client.PostAsync(apiEndpoint, content, new JsonMediaTypeFormatter());
     }
