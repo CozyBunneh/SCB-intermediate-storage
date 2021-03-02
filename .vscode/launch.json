@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/scb-api/bin/Debug/netcoreapp3.1/scb-api.dll",
+      "program": "${workspaceFolder}/scb-api/bin/Debug/net5.0/scb-api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/scb-api",
       "stopAtEntry": false,
