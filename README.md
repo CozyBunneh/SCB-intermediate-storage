@@ -42,7 +42,7 @@ or F5 in VS Code
 Use VS Code and open the root folder of the project.
 
 ## scb-api
-The backend project, written in dotnet core 3.1
+The backend project, written in .NET 5
 
 ### How to start
 Simply press F5 in VS Code and the project will start in debug mode (as long as the necessary plugins are installed).
